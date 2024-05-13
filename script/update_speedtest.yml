@@ -1,0 +1,32 @@
+- hosts: parser-telkom
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    directories_to_check:
+      - { directory: '/home/pamadmin/netsight_static/bandung-a/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/bandung-b/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/bandung-c/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/jakarta1-a/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/jakarta1-b/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/jakarta1-c/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/jakarta2-a/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/jakarta2-b/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/balikpapan-a/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/balikpapan-b/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/balikpapan-c/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/yogyakarta-a/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/yogyakarta-b/traceroute/', time: '-60' }
+      - { directory: '/home/pamadmin/netsight_static/surabaya-a/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/surabaya-b/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/surabaya-c/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/pekanbaru-a/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/pekanbaru-b/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/pekanbaru-c/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/makassar-a/speedtest/', time: '-120' }
+      - { directory: '/home/pamadmin/netsight_static/makassar-b/speedtest/', time: '-120' }
+
+
+  roles:
+    - database

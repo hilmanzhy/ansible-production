@@ -1,0 +1,10 @@
+- hosts: remote
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    state: "{{ var }}"
+#    ansible_python_interpreter: /usr/bin/python2.7
+  roles:
+    - api

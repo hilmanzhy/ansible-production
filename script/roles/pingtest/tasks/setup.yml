@@ -1,0 +1,74 @@
+- name: checklist
+  stat:
+    path: "{{ directory }}"
+  register: directory_result
+  tags: create
+
+- name: create dirs
+  file:
+    path: "{{ directory }}/{{ item }}"
+    state: directory
+    recurse: "{{ recurse }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  when: not directory_result.stat.exists
+  with_items: "{{ item }}"
+  tags: create
+
+- name: remove dirs
+  file:
+    path: "{{ directory }}"
+    state: absent
+  tags: remove
+
+- name: upload default file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  with_items: "{{ directory }}"
+  tags: default
+
+- name: state container
+  docker_container:
+    name: ping_exporter
+    image: immobisolusiprima/ping_exporter
+#    recreate: no
+    restart_policy: unless-stopped
+#     recreate: no
+    env:
+       TZ: Asia/Jakarta
+    network_mode: host
+    dns_servers: "8.8.8.8"
+    volumes:
+       - "/opt/ping_exporter:/app"
+    state: stopped
+  tags: default
+
+- name: upload file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  with_items: "{{ directory }}"
+  tags: upload
+
+- name: state container
+  docker_container:
+     name: ping_exporter
+     image: immobisolusiprima/ping_exporter
+     restart_policy: unless-stopped
+#     recreate: no
+     env:
+        TZ: Asia/Jakarta
+     network_mode: host
+     dns_servers: "8.8.8.8"
+     volumes:
+        - "/opt/ping_exporter:/app"
+     state: "{{ state }}"
+  tags: state

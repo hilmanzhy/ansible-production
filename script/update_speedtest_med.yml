@@ -1,0 +1,32 @@
+- hosts: parser-mediation
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    directories_to_check:
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-a/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-b/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-c/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-a/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-b/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-c/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta2-a/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta2-b/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-a/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-b/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-c/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/yogyakarta-a/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/yogyakarta-b/speedtest/', time: '-60' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-a/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-b/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-c/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-a/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-b/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-c/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/makassar-a/speedtest/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/makassar-b/speedtest/', time: '-30' }
+
+
+  roles:
+    - database

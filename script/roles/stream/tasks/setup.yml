@@ -1,0 +1,58 @@
+- name: checklist
+  stat:
+    path: "{{ directory }}"
+  register: directory_result
+  tags: create
+
+- name: create dirs
+  file:
+    path: "{{ directory }}/{{ item }}"
+    state: directory
+    recurse: "{{ recurse }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  when: not directory_result.stat.exists
+  with_items: "{{ item }}"
+  tags: create
+
+- name: remove dirs
+  file:
+    path: "{{ directory }}"
+    state: absent
+  tags: remove
+
+- name: upload file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  with_items: "{{ directory }}"
+  tags: upload
+
+- name: state systemd
+#  sudo: true
+  systemd:
+    state: "{{ state }}"
+    daemon-reload: no
+    name: streamvideo
+    enabled: yes
+  tags: state
+
+#- name: state container
+#  docker_container:
+#    name: streamvideo
+#    shm_size: 4g
+#    image: immobisolusiprima/streamvideo
+#    restart_policy: unless-stopped
+#     recreate: no
+#    env:
+#       TZ: Asia/Jakarta
+#    dns_servers: "8.8.8.8"
+#    volumes:
+#       - "/opt/streamvideo:/app"
+#    state: "{{ state }}"
+#  register: docker_container_status
+#  tags: state

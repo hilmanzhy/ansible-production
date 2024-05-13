@@ -1,0 +1,17 @@
+- hosts: airflow
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0664
+    directory:
+      - { src: '/home/kominfo/ansible/airflow/pingtest', dest: '/home/netview/dags/sql' }
+      - { src: '/home/kominfo/ansible/airflow/speedtest', dest: '/home/netview/dags/sql' }
+      - { src: '/home/kominfo/ansible/airflow/vstreamtest', dest: '/home/netview/dags/sql' }
+  roles:
+    - airflow

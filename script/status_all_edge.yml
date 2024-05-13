@@ -1,0 +1,9 @@
+- hosts: edge
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    state: "{{ var }}"
+  roles:
+    - database

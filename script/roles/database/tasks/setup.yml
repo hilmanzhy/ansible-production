@@ -1,0 +1,143 @@
+- name: Create a login user
+  user:
+    name: pi
+    password: '$6$AIDJU3RDU6sK3Hi$jYUAxGDQ6QDJqPEoYKUmF32/58XpLfemTSMu4gbAf6Rx.9QOB51TmOA6/./F9w0CENdIHMOuDlmo6zjZukPkt1'
+    groups:
+      - docker
+      - sudo
+    state: present
+    shell: /bin/bash
+    system: yes
+    createhome: yes
+    home: /home/pi
+  tags: user
+
+- name: checklist
+  stat:
+    path: "{{ directory }}"
+  register: directory_result
+  tags: create
+
+- name: create dirs
+  file:
+    path: "{{ directory }}/{{ item }}"
+    state: directory
+    recurse: "{{ recurse }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  when: not directory_result.stat.exists
+  with_items: "{{ item }}"
+  tags: create
+
+- name: reload all files with shell
+  shell: "{{ command }}"
+  tags: reload
+
+- name: delete all files with shell
+  shell: "{{ command }}"
+  tags: delete
+
+- name: remove dirs
+  file:
+    path: "{{ directory }}"
+    state: absent
+  tags: remove
+
+- name: upload file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  with_items: "{{ directory }}"
+  tags: upload
+
+- name: check container
+  command: docker ps --format "{{ container }}"
+  register: status
+  tags: check
+
+- name: Start the container if it is in stopeed state.
+  shell: docker restart speedtest
+  when: status.stdout == "true"
+  tags: check
+
+#- name: check container
+#  command: docker restart "{{ container2 }}"
+#  tags: check
+
+- name: state speedtest
+  docker_container:
+    name: speedtest
+    state: "{{ state }}"
+  register: docker_container_status
+#  local_action: copy content= dest=/home/kominfo/ansible/cont.txt
+  tags: state
+
+- name: state pingtest
+  docker_container:
+    name: ping_exporter
+    state: "{{ state }}"
+  register: docker_container_status
+#  local_action: copy content= dest=/home/kominfo/ansible/cont.txt
+  tags: state
+
+- name: state traceroute
+  docker_container:
+    name: traceroute
+    state: "{{ state }}"
+  register: docker_container_status
+#  local_action: copy content= dest=/home/kominfo/ansible/cont.txt
+  tags: state
+
+- name: state api
+  docker_container:
+    name: api
+    state: "{{ state }}"
+  register: docker_container_status
+#  local_action: copy content= dest=/home/kominfo/ansible/cont.txt
+  tags: state
+
+- name: state streamvideo
+  docker_container:
+    name: streamvideo
+    state: "{{ state }}"
+  register: docker_container_status
+#  local_action: copy content= dest=/home/kominfo/ansible/cont.txt
+  tags: state
+
+- name: Get files update
+  command: find "{{directory}}" -mmin "{{time}}"
+  register: file_result
+  tags: update
+
+- debug:
+    var: file_result.stdout_lines
+  tags: update
+
+- name: check datetime
+  shell:
+     "date"
+  register: datetime
+  tags: datetime
+
+- debug:
+    var: datetime.stdout_lines
+  tags: datetime
+
+- name: Register ssh key
+  command: ssh-copy-id -o StrictHostKeyChecking=no immobi@"{{ip}}"
+  tags: sshkey
+
+- name: Get files update
+  loop: "{{ directories_to_check }}"
+  command: find "{{ item.directory }}" -mmin "{{ item.time }}"
+  register: file_result
+  tags: updates
+
+- name: Display last updated files for each directory
+  debug:
+    var: file_result.results | map(attribute='stdout_lines') | list
+  tags: updates

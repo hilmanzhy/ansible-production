@@ -1,0 +1,10 @@
+- hosts: netsight-minipc
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    ip: 100.100.13.170
+
+  roles:
+    - database

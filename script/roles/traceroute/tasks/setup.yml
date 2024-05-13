@@ -1,0 +1,78 @@
+- name: checklist
+  stat:
+    path: "{{ directory }}"
+  register: directory_result
+  tags: create
+
+- name: create dirs
+  file:
+    path: "{{ directory }}/{{ item }}"
+    state: directory
+    recurse: "{{ recurse }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  when: not directory_result.stat.exists
+  with_items: "{{ item }}"
+  tags: create
+
+- name: remove dirs
+  file:
+    path: "{{ directory }}"
+    state: absent
+  tags: remove
+
+- name: upload default file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  with_items: "{{ directory }}"
+  tags: default
+
+- name: state container
+  docker_container:
+    name: traceroute
+    image: immobisolusiprima/traceroute
+#    recreate: no
+    restart_policy: unless-stopped
+    env:
+       TZ: Asia/Jakarta
+    dns_servers: "8.8.8.8"
+    volumes:
+       - "/opt/traceroute:/app"
+    state: stopped
+  tags: default
+
+- name: upload file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  with_items: "{{ directory }}"
+  tags: upload
+
+- name: restart container
+  docker_container:
+    name: traceroute
+    state: started
+    restart: yes
+  tags: upload
+
+- name: state container
+  docker_container:
+    name: traceroute
+    image: immobisolusiprima/traceroute
+    restart_policy: unless-stopped
+#     recreate: no
+    env:
+       TZ: Asia/Jakarta
+    dns_servers: "8.8.8.8"
+    volumes:
+       - "/opt/traceroute:/app"
+    state: "{{ state }}"
+  tags: state

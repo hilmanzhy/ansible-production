@@ -1,0 +1,32 @@
+- hosts: parser-mediation
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    directories_to_check:
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-a/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-b/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-c/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-a/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-b/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-c/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta2-a/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta2-b/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-a/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-b/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-c/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/yogyakarta-a/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/yogyakarta-b/ping_exporter/', time: '-60' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-a/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-b/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-c/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-a/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-b/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-c/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/makassar-a/ping_exporter/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/makassar-b/ping_exporter/', time: '-30' }
+
+
+  roles:
+    - database

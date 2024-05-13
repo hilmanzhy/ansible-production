@@ -1,0 +1,32 @@
+- hosts: parser-mediation
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    directories_to_check:
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-a/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-b/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-c/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-a/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-b/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-c/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta2-a/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta2-b/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-a/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-b/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-c/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/yogyakarta-a/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/yogyakarta-b/streamvideo/', time: '-60' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-a/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-b/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-c/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-a/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-b/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-c/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/makassar-a/streamvideo/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/makassar-b/streamvideo/', time: '-30' }
+
+
+  roles:
+    - database

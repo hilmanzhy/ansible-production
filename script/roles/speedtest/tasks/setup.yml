@@ -1,0 +1,49 @@
+- name: checklist
+  stat:
+    path: "{{ directory }}"
+  register: directory_result
+  tags: create
+
+- name: create dirs
+  file:
+    path: "{{ directory }}/{{ item }}"
+    state: directory
+    recurse: "{{ recurse }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  when: not directory_result.stat.exists
+  with_items: "{{ item }}"
+  tags: create
+
+- name: remove dirs
+  file:
+    path: "{{ directory }}"
+    state: absent
+  tags: remove
+
+- name: upload file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    mode: "{{ mode }}"
+  with_items: "{{ directory }}"
+  tags: upload
+
+- name: state container
+  docker_container:
+    name: speedtest
+    image: immobisolusiprima/speedtest
+    restart_policy: unless-stopped
+#     recreate: no
+    env:
+      TZ: Asia/Jakarta
+    dns_servers: "8.8.8.8"
+    volumes:
+       - "/opt/speedtest:/app"
+    state: "{{ state }}"
+  register: docker_container_status
+#  local_action: copy content= dest=/home/kominfo/ansible/cont.txt
+  tags: state

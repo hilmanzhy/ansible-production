@@ -1,0 +1,16 @@
+- hosts: remote
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0664
+    directory:
+      - { src: '/$HOME/ansible/traceroute/{{var}}', dest: '/opt/traceroute/config_ip.ini' }
+
+  roles:
+    - traceroute

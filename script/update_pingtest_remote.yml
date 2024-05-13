@@ -1,0 +1,18 @@
+- hosts: parser-telkom
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    directories_to_check:
+      - { directory: '/home/pamadmin/netsight_remote/aws-hongkong/ping_exporter/', time: '-30' }
+      - { directory: '/home/pamadmin/netsight_remote/aws-singapore/ping_exporter/', time: '-30' }
+      - { directory: '/home/pamadmin/netsight_remote/aws-tokyo/ping_exporter/', time: '-30' }
+      - { directory: '/home/pamadmin/netsight_remote/aws-ohio/ping_exporter/', time: '-30' }
+      - { directory: '/home/pamadmin/netsight_remote/gcp-hongkong/ping_exporter/', time: '-30' }
+      - { directory: '/home/pamadmin/netsight_remote/gcp-jakarta/ping_exporter/', time: '-30' }
+      - { directory: '/home/pamadmin/netsight_remote/gcp-singapore/ping_exporter/', time: '-30' }
+      - { directory: '/home/pamadmin/netsight_remote/gcp-tokyo/ping_exporter/', time: '-30' }
+
+  roles:
+    - database

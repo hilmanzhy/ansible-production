@@ -1,0 +1,14 @@
+- hosts: nts-active
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    directories_to_check:
+      - { directory: '/opt/ping_exporter/result_pingtest/', time: '-30' }
+      - { directory: '/opt/traceroute/result_traceroute/', time: '-30' }
+      - { directory: '/opt/speedtest/result_speedtest/', time: '-30' }
+      - { directory: '/opt/ping_exporter/result/csv//', time: '-150' }
+
+  roles:
+    - database

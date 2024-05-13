@@ -1,0 +1,5 @@
+*.sql
+*_ip.ini
+*_edge.ini
+*_remote.ini
+*targets*.yml

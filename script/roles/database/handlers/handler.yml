@@ -1,0 +1,26 @@
+- name: speedtest
+  sudo: true
+  systemd:
+    name: speedtest-cli
+    daemon_reload: yes
+    enabled: yes
+    state: started
+
+- name: start-speed
+  sudo: true
+  docker_container:
+    name: speedtest
+    state: started
+
+- name: stop-speed
+  sudo: true
+  docker_container:
+    name: speedtest
+    state: stopped
+
+- name: restart-speed
+  sudo: true
+  docker_container:
+    name: speedtest
+    state: started
+    restart: yes

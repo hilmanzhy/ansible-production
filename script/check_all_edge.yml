@@ -1,0 +1,13 @@
+- hosts: edge
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    container : "speedtest"
+#    container2 : "api"
+#    container3 : "streamvideo"
+#    container4 : "traceroute"
+#    container5 : "ping_exporter"
+  roles:
+    - database

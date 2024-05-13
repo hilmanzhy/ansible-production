@@ -1,0 +1,23 @@
+- hosts: edge
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0664
+    directory:
+      - { src: '/$HOME/ansible/database/{{var}}', dest: '/opt/speedtest/database.ini' }
+      - { src: '/$HOME/ansible/database/{{var}}', dest: '/opt/traceroute/database.ini' }
+      - { src: '/$HOME/ansible/database/{{var}}', dest: '/opt/ping_exporter/database.ini' }
+      - { src: '/$HOME/ansible/database/{{var}}', dest: '/opt/streamvideo/database.ini' }
+      - { src: '/$HOME/ansible/database/{{var}}', dest: '/opt/api/database.ini' }
+      - { src: '/$HOME/ansible/database/{{var}}', dest: '/opt/temperature/database.ini' }
+      - { src: '/$HOME/ansible/database/{{var}}', dest: '/opt/gps/database.ini' }
+      - { src: '/$HOME/ansible/database/{{var}}', dest: '/opt/database/database.ini' }
+
+  roles:
+    - database

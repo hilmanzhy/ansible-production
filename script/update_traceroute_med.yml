@@ -1,0 +1,32 @@
+- hosts: parser-mediation
+  strategy: free
+  gather_facts: no
+  become: true
+  become_user: root
+  vars:
+    directories_to_check:
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-a/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-b/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/bandung-c/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-a/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-b/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta1-c/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta2-a/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/jakarta2-b/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-a/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-b/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/balikpapan-c/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/yogyakarta-a/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/yogyakarta-b/traceroute/', time: '-60' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-a/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-b/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/surabaya-c/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-a/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-b/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/pekanbaru-c/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/makassar-a/traceroute/', time: '-30' }
+      - { directory: '/home/netsightusr/netsight_edge_static/makassar-b/traceroute/', time: '-30' }
+
+
+  roles:
+    - database
